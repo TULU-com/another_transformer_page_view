@@ -50,6 +50,9 @@ class TransformInfo {
   /// User drag is done.
   final bool? done;
 
+  /// allowImplicitScrolling.
+  final bool? allowImplicitScrolling;
+  
   /// Same as [TransformerPageView.viewportFraction]
   final double? viewportFraction;
 
@@ -67,6 +70,7 @@ class TransformInfo {
     this.done,
     this.viewportFraction,
     this.scrollDirection,
+    this.allowImplicitScrolling,
   });
 }
 
@@ -431,6 +435,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
     final builder = _transformer == null ? _buildItemNormal : _buildItem;
     final Widget child = PageView.builder(
       itemBuilder: builder,
+      allowImplicitScrolling: widget.allowImplicitScrolling,
       itemCount: _pageController!.getRealItemCount(),
       onPageChanged: _onIndexChanged,
       controller: _pageController,
