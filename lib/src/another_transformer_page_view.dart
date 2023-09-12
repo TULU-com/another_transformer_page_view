@@ -81,9 +81,9 @@ abstract class PageTransformer {
 }
 
 typedef PageTransformerBuilderCallback = Widget Function(
-  Widget child,
-  TransformInfo info,
-);
+    Widget child,
+    TransformInfo info,
+    );
 
 class PageTransformerBuilder extends PageTransformer {
   final PageTransformerBuilderCallback builder;
@@ -109,13 +109,13 @@ class TransformerPageController extends PageController {
     this.itemCount,
     this.reverse = false,
   }) : super(
-          initialPage: TransformerPageController._getRealIndexFromRenderIndex(
-            initialPage ?? 0,
-            loop,
-            itemCount,
-            reverse,
-          )!,
-        );
+    initialPage: TransformerPageController._getRealIndexFromRenderIndex(
+      initialPage ?? 0,
+      loop,
+      itemCount,
+      reverse,
+    )!,
+  );
 
   int? getRenderIndexFromRealIndex(int index) {
     return _getRenderIndexFromRealIndex(index, loop, itemCount, reverse);
@@ -126,12 +126,10 @@ class TransformerPageController extends PageController {
     return loop ? itemCount! + kMaxValue : itemCount;
   }
 
-  static int _getRenderIndexFromRealIndex(
-    int index,
-    bool loop,
-    int? itemCount,
-    bool reverse,
-  ) {
+  static int _getRenderIndexFromRealIndex(int index,
+      bool loop,
+      int? itemCount,
+      bool reverse,) {
     if (itemCount == 0) return 0;
     int? renderIndex;
     if (loop) {
@@ -154,12 +152,10 @@ class TransformerPageController extends PageController {
     return super.page;
   }
 
-  static double? _getRenderPageFromRealPage(
-    double? page,
-    bool loop,
-    int? itemCount,
-    bool reverse,
-  ) {
+  static double? _getRenderPageFromRealPage(double? page,
+      bool loop,
+      int? itemCount,
+      bool reverse,) {
     double? renderPage;
     if (loop) {
       renderPage = page! - kMiddleValue;
@@ -188,12 +184,10 @@ class TransformerPageController extends PageController {
     return _getRealIndexFromRenderIndex(index, loop, itemCount, reverse);
   }
 
-  static int? _getRealIndexFromRenderIndex(
-    int? index,
-    bool loop,
-    int? itemCount,
-    bool reverse,
-  ) {
+  static int? _getRealIndexFromRenderIndex(int? index,
+      bool loop,
+      int? itemCount,
+      bool reverse,) {
     int result;
     if (reverse) {
       result = itemCount! - index! - 1;
@@ -253,10 +247,10 @@ class TransformerPageView extends StatefulWidget {
 
   /// If not set, it is controlled by this widget.
   final int? index;
-  
+
   /// allowImplicitScrolling.
-  final bool? allowImplicitScrolling;
-  
+  final bool allowImplicitScrolling;
+
 
   /// Creates a scrollable list that works page by page using widgets that are
   /// created on demand.
@@ -285,9 +279,10 @@ class TransformerPageView extends StatefulWidget {
     this.transformer,
     this.itemBuilder,
     this.pageController,
-    this.allowImplicitScrolling,
+    this.allowImplicitScrolling = false,
     required this.itemCount,
-  })  : assert(itemCount == 0 || itemBuilder != null || transformer != null),
+  })
+      : assert(itemCount == 0 || itemBuilder != null || transformer != null),
         duration = duration ??
             const Duration(milliseconds: kDefaultTransactionDuration);
 
@@ -302,7 +297,7 @@ class TransformerPageView extends StatefulWidget {
     bool pageSnapping = true,
     ValueChanged<int?>? onPageChanged,
     IndexController? controller,
-    bool? allowImplicitScrolling,
+    bool allowImplicitScrolling = false,
     PageTransformer? transformer,
     required List<Widget> children,
     TransformerPageController? pageController,
@@ -312,7 +307,7 @@ class TransformerPageView extends StatefulWidget {
       itemBuilder: (BuildContext context, int index) {
         return children[index];
       },
-      allowImplicitScrolling:allowImplicitScrolling,
+      allowImplicitScrolling: allowImplicitScrolling,
       pageController: pageController,
       transformer: transformer,
       pageSnapping: pageSnapping,
@@ -368,6 +363,7 @@ class TransformerPageView extends StatefulWidget {
 class _TransformerPageViewState extends State<TransformerPageView> {
   Size? _size;
   late int _activeIndex;
+
   // late double _currentPixels;
   bool _done = false;
 
@@ -415,7 +411,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
           height: _size!.height,
           position: position.clamp(-1.0, 1.0),
           activeIndex:
-              _pageController!.getRenderIndexFromRealIndex(_activeIndex),
+          _pageController!.getRenderIndexFromRealIndex(_activeIndex),
           fromIndex: _fromIndex,
           forward: _pageController!.position.pixels >= 0,
           done: _done,
@@ -618,7 +614,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
         }
         break;
       default:
-        //ignore this event
+      //ignore this event
         return;
     }
     if (widget.controller!.animation) {
