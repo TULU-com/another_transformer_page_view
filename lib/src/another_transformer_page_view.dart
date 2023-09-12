@@ -50,9 +50,6 @@ class TransformInfo {
   /// User drag is done.
   final bool? done;
 
-  /// allowImplicitScrolling.
-  final bool? allowImplicitScrolling;
-  
   /// Same as [TransformerPageView.viewportFraction]
   final double? viewportFraction;
 
@@ -70,7 +67,6 @@ class TransformInfo {
     this.done,
     this.viewportFraction,
     this.scrollDirection,
-    this.allowImplicitScrolling,
   });
 }
 
@@ -257,6 +253,10 @@ class TransformerPageView extends StatefulWidget {
 
   /// If not set, it is controlled by this widget.
   final int? index;
+  
+  /// allowImplicitScrolling.
+  final bool? allowImplicitScrolling;
+  
 
   /// Creates a scrollable list that works page by page using widgets that are
   /// created on demand.
@@ -285,6 +285,7 @@ class TransformerPageView extends StatefulWidget {
     this.transformer,
     this.itemBuilder,
     this.pageController,
+    this.allowImplicitScrolling,
     required this.itemCount,
   })  : assert(itemCount == 0 || itemBuilder != null || transformer != null),
         duration = duration ??
@@ -301,6 +302,7 @@ class TransformerPageView extends StatefulWidget {
     bool pageSnapping = true,
     ValueChanged<int?>? onPageChanged,
     IndexController? controller,
+    bool? allowImplicitScrolling,
     PageTransformer? transformer,
     required List<Widget> children,
     TransformerPageController? pageController,
@@ -310,6 +312,7 @@ class TransformerPageView extends StatefulWidget {
       itemBuilder: (BuildContext context, int index) {
         return children[index];
       },
+      allowImplicitScrolling:allowImplicitScrolling,
       pageController: pageController,
       transformer: transformer,
       pageSnapping: pageSnapping,
